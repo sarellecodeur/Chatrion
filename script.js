@@ -15,14 +15,28 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-// Vérifie si l'utilisateur est déjà connecté
-auth.onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    initUser(user);
+    // ✅ L'utilisateur est connecté
+    const username = user.displayName;
+    const pfp = user.photoURL;
+
+    // Stocker dans le localStorage si jamais
+    localStorage.setItem("username", username);
+    localStorage.setItem("pfp", pfp);
+
+    // Afficher les infos dans l'UI
+    document.getElementById("username").value = username;
+    document.getElementById("username").disabled = true;
+
+    // 💬 Charger les messages après être connecté
+    listenForMessages();
   } else {
-    signInWithGoogle();
+    // ❌ Pas connecté
+    alert("Tu n'es pas connecté ! Clique sur le bouton pour te connecter.");
   }
 });
+
 
 function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
