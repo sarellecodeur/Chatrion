@@ -2,55 +2,15 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>💬 Chatrion - Ton mini Discord</title>
+  <title>Chatrion</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
-<meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
-
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
+      font-family: sans-serif;
       padding: 20px;
       background: #f4f4f4;
-      color: #333;
-    }
-
-    h2 {
-      margin-top: 0;
-    }
-
-    #chat {
-      border: 1px solid #ccc;
-      padding: 10px;
-      height: 300px;
-      overflow-y: scroll;
-      background: white;
-      margin-top: 10px;
-      border-radius: 6px;
-    }
-
-    input, button {
-      margin: 5px 0;
-      padding: 8px;
-      width: 100%;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #bbb;
-    }
-
-    button {
-      cursor: pointer;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      transition: background 0.2s ease;
-    }
-
-    button:hover {
-      background: #45a049;
     }
 
     #settings {
@@ -60,6 +20,22 @@
       border-radius: 5px;
     }
 
+    #chat {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      background: white;
+      margin-top: 10px;
+    }
+
+    input, button {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+      font-size: 14px;
+    }
+
     .message {
       display: flex;
       align-items: center;
@@ -67,9 +43,9 @@
     }
 
     .message img {
-      width: 40px;
-      height: 40px;
-      border-radius: 10%;
+      width: 35px;
+      height: 35px;
+      border-radius: 8px;
       margin-right: 10px;
       object-fit: cover;
     }
@@ -79,44 +55,34 @@
       word-wrap: break-word;
     }
 
-    #chatbox {
-      display: none;
+    button {
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
     }
 
-    #auth {
-      text-align: center;
+    button:hover {
+      background: #45a049;
     }
-
-    .emoji-label {
-      font-size: 20px;
-      margin-right: 8px;
-    }
-
   </style>
 </head>
 <body>
-  <h2>💬 Chatrion <span style="font-size: 14px;">(créé par Sarel)</span></h2>
+  <h2>💬 Chatrion (créé par Sarel)</h2>
 
-  <div id="auth">
-    <p>🚪 Connexion nécessaire</p>
-    <button onclick="signInWithGoogle()">Se connecter avec Google 🔐</button>
+  <div id="settings">
+    <h3>⚙️ Paramètres</h3>
+    <input id="newUsername" placeholder="Nouveau pseudo (ex: Sarel#1234)">
+    <input id="pfp" placeholder="Lien image de profil (URL)">
+    <button onclick="saveSettings()">✅ Enregistrer</button>
   </div>
 
-  <div id="chatbox">
-    <div id="settings">
-      <h3>⚙️ Paramètres</h3>
-      <label class="emoji-label">🧑</label><input id="newUsername" placeholder="Nouveau pseudo">
-      <label class="emoji-label">🖼️</label><input id="pfp" placeholder="Lien image de profil (URL)">
-      <button onclick="saveSettings()">💾 Enregistrer</button>
-    </div>
+  <input id="username" disabled>
+  <input id="message" placeholder="💬 Ton message ici...">
+  <button onclick="sendMessage()">📨</button>
 
-    <input id="username" disabled>
-    <label class="emoji-label">💭</label><input id="message" placeholder="Ton message">
-    <button onclick="sendMessage()">📤</button>
-    <button onclick="signOutUser()">🔓 Déconnexion</button>
-
-    <div id="chat"></div>
-  </div>
+  <div id="chat"></div>
 
   <script src="script.js"></script>
 </body>
